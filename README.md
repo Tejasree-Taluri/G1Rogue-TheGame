@@ -19,4 +19,4 @@
  emulate.
 
 #### Saqib Motlani
-I am a software engineering grad student. This is my last course at DePaul before graduating. .
+I am a software engineering grad student. This is my last course at DePaul before graduating.
