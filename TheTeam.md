@@ -7,3 +7,6 @@ I am a Computer Science graduate student in my final quarter at DePaul Universit
 
 ### Karthik pinneboyina
 I am doing my graduation in the field of computer science and I am currently in my fifth quarter at Depaul university.
+
+### Pavithra Munusamy
+I am a Computer Science graduate in my Fifth quater at Depaul University.
