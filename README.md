@@ -1,7 +1,7 @@
 # ROGUE: Exploring the Dungeons of  Doom
 ### Course: SE459 Agile Software Development 
 ### Date: 01-22-2025
-### Authors: Tejasree Taluri, Saqib Motlani, Karthik Pinnaboyina, Pavitra Munusamy
+### Authors: Tejasree Taluri, Saqib Motlani, Karthik Pinneboyina, Pavitra Munusamy
 ### Overview: 
 (As a part of our course work)
  Rogue1 is a 1980’s dungeon-crawling video game. It uses ASCII text to display a randomly
