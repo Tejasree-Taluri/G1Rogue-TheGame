@@ -1,13 +1,13 @@
 package roguegame;
 
-public class Player {
+class Player {
     private int x;
     private int y;
     private int health;
     private int level;
     private int gold;
     private int armor;
-    private int food; // New attribute to track food
+    private int food;
 
     public Player(int x, int y, int health, int gold, int armor) {
         this.x = x;
