@@ -3,20 +3,19 @@ plugins {
     id 'application'       // Apply the application plugin to run the project
 }
 
-group = 'com.roguegame'      // Group name for your project
-version = '1.0-SNAPSHOT'     // Version for your project
+group = 'com.roguegame'
+version = '1.0-SNAPSHOT'
 
 repositories {
-    mavenCentral()          // Download dependencies from Maven Central
+    mavenCentral()
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.13.2'   // Example: Add JUnit for testing
+    testImplementation 'junit:junit:4.13.2'
 }
 
-mainClassName = 'roguegame.DungeonGame'  // Your main class (adjust if needed)
+mainClassName = 'roguegame.DungeonGame'
 
 sourceSets.main.java.srcDirs = ['src']
 
-// Optional: Specify the default task to run the application
-// No need to manually define `run`, it's already provided by the 'application' plugin
+
