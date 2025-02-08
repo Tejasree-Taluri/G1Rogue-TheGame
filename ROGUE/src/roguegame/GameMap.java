@@ -2,11 +2,11 @@ package roguegame;
 
 import java.util.Random;
 
-public class GameMap {
+class GameMap {
     private int width;
     private int height;
     private char[][] map;
-    private boolean hasFood;
+    private int stairsX, stairsY; // Stairs position
 
     public GameMap(int width, int height) {
         this.width = width;
@@ -17,24 +17,51 @@ public class GameMap {
 
     private void generateMap() {
         Random random = new Random();
+        // Fill the map with walls
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                if (x == 0 || x == width - 1 || y == 0 || y == height - 1) {
-                    map[y][x] = '#'; // Walls
-                } else {
-                    map[y][x] = random.nextDouble() < 0.7 ? '.' : '#'; // Random floor or wall
-                }
+                map[y][x] = '#'; // Walls by default
             }
         }
-        // Add stairs
-        map[height - 2][width - 2] = '>';
 
-        // Add food
-        if (random.nextDouble() < 0.1) { // 10% chance of food
-            int foodX = random.nextInt(width - 2) + 1;
-            int foodY = random.nextInt(height - 2) + 1;
-            map[foodY][foodX] = 'a'; // Food item (a)
-            hasFood = true;
+        // Create rooms and corridors
+        int numRooms = random.nextInt(5) + 5; // 5 to 9 rooms
+        for (int i = 0; i < numRooms; i++) {
+            int roomWidth = random.nextInt(6) + 4; // Room width between 4 and 9
+            int roomHeight = random.nextInt(6) + 4; // Room height between 4 and 9
+            int roomX = random.nextInt(width - roomWidth - 1) + 1;
+            int roomY = random.nextInt(height - roomHeight - 1) + 1;
+
+            // Carve out the room
+            for (int y = roomY; y < roomY + roomHeight; y++) {
+                for (int x = roomX; x < roomX + roomWidth; x++) {
+                    map[y][x] = '.'; // Floor tiles
+                }
+            }
+
+            // Connect rooms with corridors
+            if (i > 0) {
+                int prevRoomCenterX = stairsX; // Use stairs position as previous room center
+                int prevRoomCenterY = stairsY;
+                int newRoomCenterX = roomX + roomWidth / 2;
+                int newRoomCenterY = roomY + roomHeight / 2;
+
+                // Horizontal corridor
+                for (int x = Math.min(prevRoomCenterX, newRoomCenterX); x <= Math.max(prevRoomCenterX, newRoomCenterX); x++) {
+                    map[prevRoomCenterY][x] = '.'; // Horizontal path
+                }
+                // Vertical corridor
+                for (int y = Math.min(prevRoomCenterY, newRoomCenterY); y <= Math.max(prevRoomCenterY, newRoomCenterY); y++) {
+                    map[y][newRoomCenterX] = '.'; // Vertical path
+                }
+            }
+
+            // Place stairs in the last room
+            if (i == numRooms - 1) {
+                stairsX = roomX + roomWidth / 2;
+                stairsY = roomY + roomHeight / 2;
+                map[stairsY][stairsX] = '>'; // Stairs tile
+            }
         }
     }
 
@@ -50,11 +77,11 @@ public class GameMap {
         return height;
     }
 
-    public boolean hasFood() {
-        return hasFood;
+    public int getStairsX() {
+        return stairsX;
     }
 
-    public void resetFood() {
-        hasFood = false;
+    public int getStairsY() {
+        return stairsY;
     }
 }
