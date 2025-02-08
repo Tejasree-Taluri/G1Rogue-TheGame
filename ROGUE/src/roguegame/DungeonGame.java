@@ -72,16 +72,13 @@ public class DungeonGame extends JFrame implements KeyListener {
                 } else if (tile == '>') {
                     g.setColor(Color.RED); // Stairs color
                     g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-                } else if (tile == 'a') {
-                    g.setColor(Color.GREEN); // Food color (rations)
-                    g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
                 }
             }
         }
     }
 
     private void updateStats() {
-        statsLabel.setText("Health: " + player.getHealth() + " | Level: " + player.getLevel() + " | Gold: " + player.getGold() + " | Armor: " + player.getArmor());
+        statsLabel.setText("Health: " + player.getHealth() + " | Level: " + player.getLevel() + " | Gold: " + player.getGold() + " | Armor: " + player.getArmor() + " | Food: " + player.getFood());
     }
 
     @Override
@@ -100,24 +97,26 @@ public class DungeonGame extends JFrame implements KeyListener {
         int newX = player.getX() + dx;
         int newY = player.getY() + dy;
 
+        // Check if the new position is within bounds
         if (newX >= 0 && newX < currentMap.getWidth() && newY >= 0 && newY < currentMap.getHeight()) {
             char tile = currentMap.getTile(newX, newY);
+
+            // If the tile is not a wall, move the player
             if (tile != '#') {
                 player.move(dx, dy);
+
+                // If the player reaches the stairs, move to the next floor
                 if (tile == '>' && currentFloor < FLOORS - 1) {
-                    currentFloor++;
-                    player.setPosition(1, 1); // Reset player position on new floor
-                }
-                if (tile == 'a') { // If food is collected
-                    player.addFood(1);
-                    currentMap.resetFood(); // Reset the food after it's collected
+                    currentFloor++; // Move to the next floor
+                    player.setPosition(1, 1); // Reset player position to the start of the new floor
                 }
             }
         }
 
-        updateStats();
-        gamePanel.repaint();
+        updateStats(); // Update player stats
+        gamePanel.repaint(); // Redraw the game panel
     }
+
 
     @Override
     public void keyReleased(KeyEvent e) {}
@@ -132,6 +131,3 @@ public class DungeonGame extends JFrame implements KeyListener {
         });
     }
 }
-
-
-
