@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: Java CI with Gradle
 
 on: [push, pull_request]
 
@@ -10,26 +10,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Verify repository structure
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Verify project structure
         run: ls -R
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
+      - name: Grant execute permission for Gradle
+        run: chmod +x ./ROGUE/gradlew
 
-      - name: Navigate to project directory (if needed)
-        run: cd G1Rogue-TheGame || exit 0  # Ensure you're in the correct directory
-
-      - name: Install dependencies
-        run: |
-          if [ -f package.json ]; then
-            npm install
-          else
-            echo "Error: package.json not found!"
-            exit 1
-          fi
-
-      - name: Run tests
-        run: npm test
+      - name: Build with Gradle
+        run: cd ROGUE && ./gradlew build
 
