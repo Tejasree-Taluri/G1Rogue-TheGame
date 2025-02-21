@@ -7,16 +7,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Verify repository structure
+        run: ls -R
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
+      - name: Navigate to project directory (if needed)
+        run: cd G1Rogue-TheGame || exit 0  # Ensure you're in the correct directory
+
       - name: Install dependencies
-        run: npm install
+        run: |
+          if [ -f package.json ]; then
+            npm install
+          else
+            echo "Error: package.json not found!"
+            exit 1
+          fi
 
       - name: Run tests
         run: npm test
+
