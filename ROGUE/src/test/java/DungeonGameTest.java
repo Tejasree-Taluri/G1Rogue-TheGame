@@ -35,4 +35,4 @@
 //        game.updateStats();
 //        assertTrue(game.statsLabel.getText().contains("Food: 10"));  // Checking the label updated correctly
 //    }
-}
+//}
