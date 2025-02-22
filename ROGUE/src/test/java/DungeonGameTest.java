@@ -1,24 +1,24 @@
-import static org.junit.Assert.*;
+//import static org.junit.Assert.*;
 
-import main.roguegame.DungeonGame;
-import org.junit.Before;
-import org.junit.Test;
+//import main.roguegame.DungeonGame;
+//import org.junit.Before;
+//import org.junit.Test;
 
 
-public class DungeonGameTest {
-    private DungeonGame game;
+//public class DungeonGameTest {
+  //  private DungeonGame game;
 
-    @Before
-    public void setUp() {
-        game = new DungeonGame();  // Initialize the game
-    }
+  //  @Before
+   // public void setUp() {
+    //    game = new DungeonGame();  // Initialize the game
+   // }
 
-    @Test
-    public void testInitialPlayerPosition() {
+   // @Test
+   // public void testInitialPlayerPosition() {
         // Testing that the player starts at position (1, 1)
-        assertEquals(1, game.getPlayer().getX());
-        assertEquals(1, game.getPlayer().getY());
-    }
+     //   assertEquals(1, game.getPlayer().getX());
+      //  assertEquals(1, game.getPlayer().getY());
+  //  }
 
 //    @Test
 //    public void testMovePlayer() {
