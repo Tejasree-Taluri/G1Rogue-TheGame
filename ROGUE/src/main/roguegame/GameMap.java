@@ -1,94 +1,87 @@
 package roguegame;
 
-class Player {
-    private int x;
-    private int y;
-    private int health;
-    private int level;
-    private int gold;
-    private int armor;
-    private int food;
-    private int experience;
-    private int damage;
+import java.util.Random;
 
-    public Player(int x, int y, int health, int gold, int armor) {
-        this.x = x;
-        this.y = y;
-        this.health = health;
-        this.level = 1;  // Starting level
-        this.gold = gold;
-        this.armor = armor;
-        this.food = 0; // Starting food
-        this.experience = 0;
-        this.damage = 10; // Base damage
+class GameMap {
+    private int width;
+    private int height;
+    private char[][] map;
+    private int stairsX, stairsY; // Stairs position
+
+    public GameMap(int width, int height) {
+        this.width = width;
+        this.height = height;
+        this.map = new char[height][width];
+        generateMap();
     }
 
-    public int getX() {
-        return x;
+    private void generateMap() {
+        Random random = new Random();
+        // Fill the map with walls
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                map[y][x] = '#'; // Walls by default
+            }
+        }
+
+        // Create rooms and corridors
+        int numRooms = random.nextInt(5) + 5; // 5 to 9 rooms
+        for (int i = 0; i < numRooms; i++) {
+            int roomWidth = random.nextInt(6) + 4; // Room width between 4 and 9
+            int roomHeight = random.nextInt(6) + 4; // Room height between 4 and 9
+            int roomX = random.nextInt(width - roomWidth - 1) + 1;
+            int roomY = random.nextInt(height - roomHeight - 1) + 1;
+
+            // Carve out the room
+            for (int y = roomY; y < roomY + roomHeight; y++) {
+                for (int x = roomX; x < roomX + roomWidth; x++) {
+                    map[y][x] = '.'; // Floor tiles
+                }
+            }
+
+            // Connect rooms with corridors
+            if (i > 0) {
+                int prevRoomCenterX = stairsX; // Use stairs position as previous room center
+                int prevRoomCenterY = stairsY;
+                int newRoomCenterX = roomX + roomWidth / 2;
+                int newRoomCenterY = roomY + roomHeight / 2;
+
+                // Horizontal corridor
+                for (int x = Math.min(prevRoomCenterX, newRoomCenterX); x <= Math.max(prevRoomCenterX, newRoomCenterX); x++) {
+                    map[prevRoomCenterY][x] = '.'; // Horizontal path
+                }
+                // Vertical corridor
+                for (int y = Math.min(prevRoomCenterY, newRoomCenterY); y <= Math.max(prevRoomCenterY, newRoomCenterY); y++) {
+                    map[y][newRoomCenterX] = '.'; // Vertical path
+                }
+            }
+
+            // Place stairs in the last room
+            if (i == numRooms - 1) {
+                stairsX = roomX + roomWidth / 2;
+                stairsY = roomY + roomHeight / 2;
+                map[stairsY][stairsX] = '>'; // Stairs tile
+            }
+        }
     }
 
-    public int getY() {
-        return y;
+    public char getTile(int x, int y) {
+        return map[y][x];
     }
 
-    public int getHealth() {
-        return health;
+    public int getWidth() {
+        return width;
     }
 
-    public int getLevel() {
-        return level;
+    public int getHeight() {
+        return height;
     }
 
-    public int getGold() {
-        return gold;
+    public int getStairsX() {
+        return stairsX;
     }
 
-    public int getArmor() {
-        return armor;
-    }
-
-    public int getFood() {
-        return food;
-    }
-
-    public int getExperience() {
-        return experience;
-    }
-
-    public int getDamage() {
-        return damage;
-    }
-
-    public void move(int dx, int dy) {
-        x += dx;
-        y += dy;
-    }
-
-    public void addFood(int amount) {
-        this.food += amount;
-    }
-
-    public void setPosition(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public void takeDamage(int damage) {
-        this.health -= damage;
-    }
-
-    public void addExperience(int experience) {
-        this.experience += experience;
-    }
-
-    public void levelUp() {
-        this.level++;
-        this.health += 20;
-        this.damage += 5;
-        this.experience = 0;
-    }
-
-    public boolean isDead() {
-        return health <= 0;
+    public int getStairsY() {
+        return stairsY;
     }
 }
