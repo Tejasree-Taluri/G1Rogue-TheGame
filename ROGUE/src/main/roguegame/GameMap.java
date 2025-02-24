@@ -1,8 +1,8 @@
-package roguegame;
+package main.roguegame;
 
 import java.util.Random;
 
-class GameMap {
+public class GameMap {
     private int width;
     private int height;
     private char[][] map;
@@ -15,7 +15,7 @@ class GameMap {
         generateMap();
     }
 
-    private void generateMap() {
+    public void generateMap() {
         Random random = new Random();
         // Fill the map with walls
         for (int y = 0; y < height; y++) {
