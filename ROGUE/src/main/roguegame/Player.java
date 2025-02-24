@@ -1,6 +1,6 @@
-package roguegame;
+package main.roguegame;
 
-class Player {
+public class Player {
     private int x;
     private int y;
     private int health;
