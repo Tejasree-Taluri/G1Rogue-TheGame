@@ -1,4 +1,4 @@
-package roguegame;
+package main.roguegame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -135,11 +135,22 @@ public class DungeonGame extends JFrame implements KeyListener {
         int dx = 0, dy = 0;
 
         switch (key) {
-            case KeyEvent.VK_W -> dy = -1;
-            case KeyEvent.VK_S -> dy = 1;
-            case KeyEvent.VK_A -> dx = -1;
-            case KeyEvent.VK_D -> dx = 1;
+            case KeyEvent.VK_W:
+                dy = -1;
+                break;
+            case KeyEvent.VK_S:
+                dy = 1;
+                break;
+            case KeyEvent.VK_A:
+                dx = -1;
+                break;
+            case KeyEvent.VK_D:
+                dx = 1;
+                break;
+            default:
+                // handle other cases or do nothing
         }
+
 
         GameMap currentMap = floors[currentFloor];
         int newX = player.getX() + dx;
@@ -194,3 +205,4 @@ public class DungeonGame extends JFrame implements KeyListener {
         });
     }
 }
+
