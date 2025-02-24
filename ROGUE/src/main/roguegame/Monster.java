@@ -1,4 +1,4 @@
-package roguegame;
+package main.roguegame;
 
 class Monster {
     private int x;
